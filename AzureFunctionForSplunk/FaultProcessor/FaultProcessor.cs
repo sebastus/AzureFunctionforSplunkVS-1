@@ -40,7 +40,7 @@ namespace AzureFunctionForSplunk.FaultProcessor
     {
         [FunctionName("FaultProcessor")]
         public static async Task Run(
-            [QueueTrigger("%input-hub-name-faults%", Connection = "AzureWebJobsStorage")]string fault,
+            [QueueTrigger("%input-queue-name-faults%", Connection = "AzureWebJobsStorage")]string fault,
             [EventHub("%output-hub-name-proxy%", Connection = "outputHubConnection")]IAsyncCollector<string> outputEvents,
             IBinder blobFaultBinder,
             ILogger log)

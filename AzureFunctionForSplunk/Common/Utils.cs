@@ -243,12 +243,20 @@ namespace AzureFunctionForSplunk.Common
                 log.LogError("Values for splunkAddress and splunkToken are required.");
                 throw new ArgumentException();
             }
-
-            if (!string.IsNullOrWhiteSpace(splunkCertThumbprint))
+            
+            if (!string.IsNullOrEmpty(splunkCertThumbprint))
             {
                 if (!splunkAddress.ToLower().StartsWith("https"))
                 {
                     throw new ArgumentException("Having provided a Splunk cert thumbprint, the address must be https://whatever");
+                }
+            }
+
+            if (splunkAddress.ToLower().StartsWith("https"))
+            {
+                if (string.IsNullOrEmpty(splunkCertThumbprint))
+                {
+                    throw new ArgumentException("Having provided an https Splunk address, a Splunk cert thumbprint must also be provided.");
                 }
             }
 
